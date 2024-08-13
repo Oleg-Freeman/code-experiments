@@ -1,5 +1,5 @@
 const util = require('util');
-const config = require('./config');
+const config = require('../config');
 
 let connection_mysql = null;
 let connection_mysql_detstat = null;

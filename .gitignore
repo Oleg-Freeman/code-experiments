@@ -4,4 +4,4 @@ node_modules
 .env
 
 # Config
-src/config/gmail.json
+config/gmail.json
