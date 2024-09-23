@@ -8,4 +8,9 @@ module.exports = {
         ip: process.env.SERVER_IP,
         password: process.env.PASSWORD,
     },
+    db: {
+        host: process.env.DB_HOSTNAME,
+        user: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+    },
 };
