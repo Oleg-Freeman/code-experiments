@@ -63,8 +63,23 @@ async function timeout2() {
     console.log('Object:', obj);
 }
 
+async function test1() {
+    async function someFunc() {
+        await new Promise((resolve, reject) => setTimeout(() => reject('Oups'), 1000));
+    }
+
+    try {
+        someFunc(); // Will not work, need to await or use .catch()
+        console.log('Done');
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 module.exports = {
     promiseArray,
     promiseArray2,
     timeout,
+    timeout2,
+    test1,
 };

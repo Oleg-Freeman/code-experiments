@@ -6,6 +6,7 @@ const loops = require('./src/loops.test');
 const urls = require('./src/url.test');
 const seven = require('./src/seven/seven.test');
 const httpTest = require('./src/http.test');
+const functions = require('./src/functions.test');
 
 (async () => {
     try {
@@ -16,8 +17,10 @@ const httpTest = require('./src/http.test');
         // loops.test1();
         // urls.test();
         // seven.monitorSeed();
-        timersTest.test3();
+        // timersTest.test4();
         // httpTest.test_1();
+        // functions.test_2();
+        promiseTests.test1();
     } catch (error) {
         console.error(error);
     } finally {

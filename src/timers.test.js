@@ -54,8 +54,20 @@ function test3() {
     }, 1000);
 }
 
+// closure test
+function test4() {
+    let counter = 0;
+
+    for (let i = 0; i < 10; i++) {
+        setTimeout(() => {
+            console.log('Counter:', ++counter);
+        }, 1000 * i);
+    }
+}
+
 module.exports = {
     test,
     test2,
     test3,
+    test4,
 };
