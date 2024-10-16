@@ -90,13 +90,16 @@ function test6() {
             return console.log('Loading');
         }
         loading = true;
+        await sleep(2 * 1000);
+        console.log('Finished');
+        loading = false;
     }, 1000);
 
     setTimeout(() => {
         loading = false;
         clearInterval(interval);
         console.log('Interval cleared');
-    }, 5000);
+    }, 10 * 1000);
 }
 
 module.exports = {
