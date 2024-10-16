@@ -17,10 +17,10 @@ const functions = require('./src/functions.test');
         // loops.test1();
         // urls.test();
         // seven.monitorSeed();
-        // timersTest.test4();
+        timersTest.test5();
         // httpTest.test_1();
         // functions.test_2();
-        promiseTests.test1();
+        // promiseTests.test1();
     } catch (error) {
         console.error(error);
     } finally {

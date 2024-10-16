@@ -65,9 +65,27 @@ function test4() {
     }
 }
 
+// Will interval continue if paused?
+function test5() {
+    let counter = 0;
+
+    const interval = setInterval(async () => {
+        if (counter === 1) {
+            await sleep(3 * 1000);
+        }
+        console.log('Counter:', ++counter);
+    }, 1000);
+
+    setTimeout(() => {
+        clearInterval(interval);
+        console.log('Interval cleared');
+    }, 5000);
+}
+
 module.exports = {
     test,
     test2,
     test3,
     test4,
+    test5,
 };
