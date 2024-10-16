@@ -82,10 +82,28 @@ function test5() {
     }, 5000);
 }
 
+function test6() {
+    let loading = false;
+
+    const interval = setInterval(async () => {
+        if (loading) {
+            return console.log('Loading');
+        }
+        loading = true;
+    }, 1000);
+
+    setTimeout(() => {
+        loading = false;
+        clearInterval(interval);
+        console.log('Interval cleared');
+    }, 5000);
+}
+
 module.exports = {
     test,
     test2,
     test3,
     test4,
     test5,
+    test6,
 };

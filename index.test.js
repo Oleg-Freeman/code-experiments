@@ -17,7 +17,7 @@ const functions = require('./src/functions.test');
         // loops.test1();
         // urls.test();
         // seven.monitorSeed();
-        timersTest.test5();
+        timersTest.test6();
         // httpTest.test_1();
         // functions.test_2();
         // promiseTests.test1();
