@@ -16,11 +16,11 @@ const functions = require('./src/functions.test');
         // await timersTest.test();
         // loops.test1();
         // urls.test();
-        // seven.monitorSeed();
-        timersTest.test6();
+        // await seven.monitorSeed();
+        // timersTest.test6();
         // httpTest.test_1();
         // functions.test_2();
-        // promiseTests.test1();
+        await promiseTests.test2();
     } catch (error) {
         console.error(error);
     } finally {

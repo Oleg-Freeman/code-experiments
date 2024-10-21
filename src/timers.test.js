@@ -90,7 +90,7 @@ function test6() {
             return console.log('Loading');
         }
         loading = true;
-        await sleep(2 * 1000);
+        await sleep(5 * 1000);
         console.log('Finished');
         loading = false;
     }, 1000);

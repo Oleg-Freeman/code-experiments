@@ -76,10 +76,32 @@ async function test1() {
     }
 }
 
+// test Promise.allSettled
+async function test2() {
+    const result = await Promise.allSettled(
+        [1, 2, 3].map(async (i) => {
+            if (i === 2) {
+                throw new Error('Oups!');
+            }
+
+            return i;
+        })
+    );
+
+    result.forEach((item) => {
+        if (item.status === 'fulfilled') {
+            console.log('Fulfilled:', item.value);
+        } else {
+            console.log('Rejected:', item.reason.message);
+        }
+    });
+}
+
 module.exports = {
     promiseArray,
     promiseArray2,
     timeout,
     timeout2,
     test1,
+    test2,
 };
