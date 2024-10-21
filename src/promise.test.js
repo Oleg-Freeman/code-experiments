@@ -97,6 +97,17 @@ async function test2() {
     });
 }
 
+// test error handling
+function test3() {
+    async function someFunc() {
+        await new Promise((resolve, reject) => setTimeout(() => reject('Oups'), 1000));
+    }
+
+    someFunc().catch((error) => console.error(error));
+    // someFunc();
+    console.log('Done');
+}
+
 module.exports = {
     promiseArray,
     promiseArray2,
@@ -104,4 +115,5 @@ module.exports = {
     timeout2,
     test1,
     test2,
+    test3,
 };

@@ -20,7 +20,7 @@ const functions = require('./src/functions.test');
         // timersTest.test6();
         // httpTest.test_1();
         // functions.test_2();
-        await promiseTests.test2();
+        await promiseTests.test3();
     } catch (error) {
         console.error(error);
     } finally {
