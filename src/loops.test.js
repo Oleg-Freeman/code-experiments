@@ -16,6 +16,41 @@ function test1() {
     console.log('Blocked command:', blockedCommand);
 }
 
+// test while loop with timers
+async function test2() {
+    const queue = [1, 2, 3, 4, 5];
+
+    const interval = setInterval(() => {
+        queue.push(queue[queue.length - 1] + 1);
+        console.log('Queue:', queue);
+
+        if (queue.length >= 10) {
+            clearInterval(interval);
+        }
+    }, 1000);
+
+    while (queue.length) {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+
+        queue.shift();
+    }
+}
+
+// test while loop
+async function test3() {
+    const queue = [1, 2, 3, 4, 5];
+
+    while (queue.length) {
+        console.log('Queue:', queue);
+
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+
+        queue.shift();
+    }
+}
+
 module.exports = {
     test1,
+    test2,
+    test3,
 };
