@@ -16,4 +16,4 @@ function stopDocker(name) {
 
 module.exports = {
     stopDocker,
-}
+};

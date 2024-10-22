@@ -14,13 +14,13 @@ const functions = require('./src/functions.test');
         // await promiseTests.timeout();
         // ssh.test2();
         // await timersTest.test();
-        await loops.test3();
+        // await loops.test3();
         // urls.test();
         // await seven.monitorSeed();
         // timersTest.test6();
         // httpTest.test_1();
         // functions.test_2();
-        // await promiseTests.test3();
+        await promiseTests.test4();
     } catch (error) {
         console.error(error);
     } finally {

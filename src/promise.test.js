@@ -108,6 +108,32 @@ function test3() {
     console.log('Done');
 }
 
+// test Promise.race
+async function test4() {
+    Promise.race([
+        new Promise((resolve, reject) =>
+            setTimeout(() => {
+                console.log('Promise 1');
+                resolve(1);
+            }, 1000)
+        ),
+        new Promise((resolve, reject) =>
+            setTimeout(() => {
+                console.log('Promise 2');
+                reject(new Error('Упс!'));
+            }, 2000)
+        ),
+        new Promise((resolve, reject) =>
+            setTimeout(() => {
+                console.log('Promise 3');
+                resolve(3);
+            }, 3000)
+        ),
+    ])
+        .then(console.log)
+        .catch(console.error);
+}
+
 module.exports = {
     promiseArray,
     promiseArray2,
@@ -116,4 +142,5 @@ module.exports = {
     test1,
     test2,
     test3,
+    test4,
 };
