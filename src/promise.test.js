@@ -110,28 +110,34 @@ function test3() {
 
 // test Promise.race
 async function test4() {
+    let count = 0;
+
     Promise.race([
         new Promise((resolve, reject) =>
             setTimeout(() => {
                 console.log('Promise 1');
+                ++count;
                 resolve(1);
             }, 1000)
         ),
         new Promise((resolve, reject) =>
             setTimeout(() => {
                 console.log('Promise 2');
+                ++count;
                 reject(new Error('Упс!'));
             }, 2000)
         ),
         new Promise((resolve, reject) =>
             setTimeout(() => {
                 console.log('Promise 3');
+                ++count;
                 resolve(3);
             }, 3000)
         ),
     ])
         .then(console.log)
-        .catch(console.error);
+        .catch(console.error)
+        .finally(() => console.log('Count:', count)); // will not work
 }
 
 module.exports = {
