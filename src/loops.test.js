@@ -49,6 +49,27 @@ async function test3() {
     }
 }
 
+// for loop inside an interval
+async function test4() {
+    let count = 0;
+    const queue = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const interval = setInterval(async () => {
+        if (count < 3) {
+            for (let i = 0; i < 3; i++) {
+                ++count;
+                console.log('Queue:', queue[i]);
+                await new Promise((resolve) => setTimeout(resolve, 3000));
+                queue.shift();
+                --count;
+            }
+        }
+        if (queue.length === 0) {
+            clearInterval(interval);
+            console.log('Done');
+        }
+    }, 1000);
+}
+
 module.exports = {
     test1,
     test2,

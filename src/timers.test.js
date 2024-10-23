@@ -102,6 +102,45 @@ function test6() {
     }, 10 * 1000);
 }
 
+// test timeout cancel
+function test7() {
+    const timeout = setTimeout(() => {
+        console.log('Timeout');
+    }, 1000);
+
+    setTimeout(() => {
+        clearTimeout(timeout);
+        console.log('Timeout cleared');
+    }, 500);
+}
+
+// test timeout cancel
+async function test8() {
+    const queue = [1, 2, 3, 4, 5, 6, 7];
+    let count = 0,
+        timeout;
+
+    while (queue.length) {
+        if (count >= 3) {
+            console.log('Waiting...');
+            await sleep(5 * 1000); // Will not work because of async code. Need a Promise cancel here
+            continue;
+        }
+        ++count;
+        const item = queue.shift();
+        console.log('Item:', item);
+        sleep(6 * 1000)
+            .then(() => {
+                --count;
+            })
+            .catch(console.error)
+            .finally(() => {
+                console.log('Finished');
+                clearTimeout(timeout);
+            });
+    }
+}
+
 module.exports = {
     test,
     test2,
@@ -109,4 +148,6 @@ module.exports = {
     test4,
     test5,
     test6,
+    test7,
+    test8,
 };
