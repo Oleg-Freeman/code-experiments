@@ -140,6 +140,42 @@ async function test4() {
         .finally(() => console.log('Count:', count)); // will not work
 }
 
+// test promise chaining
+async function test5() {
+    const res = await new Promise((resolve, reject) => resolve('0'))
+        .then((result) => {
+            console.log('Result:', result);
+            return result + '1';
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            return 'e';
+        })
+        .then((result) => {
+            console.log('Result:', result);
+            return result + '3';
+        })
+        .finally(() => {
+            console.log('Finally');
+            return 55;
+        })
+        .then((result) => {
+            console.log('Result:', result);
+            return result + 1;
+        });
+
+    console.log('-----------------');
+    console.log('Result:', res);
+}
+
+// Test Promise.resolve
+function test6() {
+    const res = Promise.resolve('Hello');
+
+    console.log('Result:', res);
+    res.then(console.log);
+}
+
 module.exports = {
     promiseArray,
     promiseArray2,
@@ -149,4 +185,6 @@ module.exports = {
     test2,
     test3,
     test4,
+    test5,
+    test6,
 };

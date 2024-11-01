@@ -35,8 +35,9 @@ function connect() {
 }
 connect();
 
+const query = util.promisify(connection_mysql.query).bind(connection_mysql);
+
 async function test() {
-    const query = util.promisify(connection_mysql.query).bind(connection_mysql);
     let data = [];
 
     for (let i = 0; i < 10; i++) {
@@ -56,7 +57,7 @@ async function test() {
 }
 
 async function monitorSeed() {
-    const query = util.promisify(connection_mysql.query).bind(connection_mysql);
+    // const query = util.promisify(connection_mysql.query).bind(connection_mysql);
     let data = await fs.readFile(path.join(__dirname, 'monitor_old_data.json'), 'utf8');
     const inserts = [];
 
@@ -87,7 +88,18 @@ async function monitorSeed() {
     // console.log('data:', data);
 }
 
+async function clearLiveServers() {
+    const date = new Date();
+    date.setMonth(date.getMonth() - 1);
+    // console.log(date.getTime());
+    const sql = `DELETE FROM live_servers WHERE unixtime < ${Math.round(date.getTime() / 1000)};`;
+    // const sql = `SELECT * FROM live_servers WHERE unixtime < ${Math.round(date.getTime() / 1000)};`;
+    const rows = await query(sql);
+    console.log(rows);
+}
+
 module.exports = {
     test,
     monitorSeed,
+    clearLiveServers,
 };

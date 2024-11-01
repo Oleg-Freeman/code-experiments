@@ -7,6 +7,8 @@ const urls = require('./src/url.test');
 const seven = require('./src/seven/seven.test');
 const httpTest = require('./src/http.test');
 const functions = require('./src/functions.test');
+const basic = require('./src/basic.test');
+const date = require('./src/date.test');
 
 (async () => {
     try {
@@ -17,10 +19,13 @@ const functions = require('./src/functions.test');
         // await loops.test3();
         // urls.test();
         // await seven.monitorSeed();
-        timersTest.test8();
+        await seven.clearLiveServers();
+        // await timersTest.test8();
         // httpTest.test_1();
         // functions.test_2();
-        // await promiseTests.test4();
+        // await promiseTests.test6();
+        // basic.test1();
+        // date.test();
     } catch (error) {
         console.error(error);
     } finally {
