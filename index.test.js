@@ -20,14 +20,14 @@ const date = require('./src/date.test');
         // urls.test();
         // await seven.monitorSeed();
         // await seven.clearLiveServers();
-        timersTest.test9();
+        // timersTest.test9();
         // httpTest.test_1();
         // functions.test_2();
-        // await promiseTests.test6();
+        await promiseTests.test2();
         // basic.test1();
         // date.test();
     } catch (error) {
-        console.error(error);
+        console.error('Global Error: ', error);
     } finally {
         // process.exit();
     }

@@ -87,8 +87,12 @@ async function test2() {
             return i;
         })
     );
+    // CATCH BLOCK WILL NEWER WORK HERE!
+    // Promise.allSettled does not reject the promise
+    // .catch(console.error);
 
     result.forEach((item) => {
+        console.log('Status:', item.status);
         if (item.status === 'fulfilled') {
             console.log('Fulfilled:', item.value);
         } else {
