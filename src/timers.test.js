@@ -141,6 +141,19 @@ async function test8() {
     }
 }
 
+// test setInterval with nested setInterval inside required file
+function test9() {
+    const interval = setInterval(() => {
+        console.log('Require a nested function');
+        require('./files/nestedIntervalTest')();
+    }, 10000);
+
+    setTimeout(() => {
+        clearInterval(interval);
+        console.log('Interval cleared');
+    }, 60000 * 3);
+}
+
 module.exports = {
     test,
     test2,
@@ -150,4 +163,5 @@ module.exports = {
     test6,
     test7,
     test8,
+    test9,
 };
