@@ -70,8 +70,21 @@ async function test4() {
     }, 1000);
 }
 
+// Will "return" command break the for loop
+async function test5() {
+    const queue = [1, 2, 3, 4, 5];
+
+    for (const item of queue) {
+        console.log('Item:', item);
+        if (item === 3) {
+            return;
+        }
+    }}
+
 module.exports = {
     test1,
     test2,
     test3,
+    test4,
+    test5
 };

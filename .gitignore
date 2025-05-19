@@ -6,3 +6,4 @@ node_modules
 # Config
 config/gmail.json
 src/seven/monitor_old_data.json
+src/seven/files

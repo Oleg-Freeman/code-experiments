@@ -9,6 +9,8 @@ const httpTest = require('./src/http.test');
 const functions = require('./src/functions.test');
 const basic = require('./src/basic.test');
 const date = require('./src/date.test');
+const mysqlTest = require('./src/mysql.test');
+const giveawayTest = require('./src/giveaway.test');
 
 (async () => {
     try {
@@ -16,16 +18,19 @@ const date = require('./src/date.test');
         // await promiseTests.timeout();
         // ssh.test2();
         // await timersTest.test();
-        // await loops.test3();
+        // await loops.test5();
         // urls.test();
         // await seven.monitorSeed();
         // await seven.clearLiveServers();
+        // await seven.countDynamicServers();
         // timersTest.test9();
         // httpTest.test_1();
         // functions.test_2();
-        await promiseTests.test2();
+        // await promiseTests.test2();
         // basic.test1();
         // date.test();
+        // mysqlTest.test1();
+        // await giveawayTest.giveaway();
     } catch (error) {
         console.error('Global Error: ', error);
     } finally {

@@ -154,6 +154,17 @@ function test9() {
     }, 60000 * 3);
 }
 
+// Test if Node.js loop is blocked
+function test10() {
+    setInterval(() => {
+        const last = process.hrtime();
+        setImmediate(() => {
+            const diff = process.hrtime(last);
+            console.log(`setImmediate callback executed after ${diff[0]}s ${diff[1] / 1e6}ms`);
+        })
+    }, 500);
+}
+
 module.exports = {
     test,
     test2,
@@ -164,4 +175,5 @@ module.exports = {
     test7,
     test8,
     test9,
+    test10,
 };

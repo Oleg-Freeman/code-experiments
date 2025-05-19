@@ -92,14 +92,107 @@ async function clearLiveServers() {
     const date = new Date();
     date.setMonth(date.getMonth() - 1);
     // console.log(date.getTime());
-    const sql = `DELETE FROM live_servers WHERE unixtime < ${Math.round(date.getTime() / 1000)};`;
-    // const sql = `SELECT * FROM live_servers WHERE unixtime < ${Math.round(date.getTime() / 1000)};`;
+    // const sql = `DELETE FROM live_servers WHERE unixtime < ${Math.round(date.getTime() / 1000)};`;
+    const sql = `SELECT * FROM live_servers WHERE unixtime < ${Math.round(date.getTime() / 1000)};`;
     const rows = await query(sql);
     console.log(rows);
+}
+
+async function testSendMails() {
+    // const csv = await fs.readFile(path.join(__dirname, 'files', 'send_mail_export.csv'), 'utf8');
+    let data = await fs.readFile(path.join(__dirname, 'files', 'send_mail_data.json'), 'utf8');
+    // prettier-ignore
+    let columns = ['typeTime', 'day', 'hour', 'header', 'mailFrom', 'mailTo', 'flag', 'dsp', 'ssp', 'group', 'order', 'comment', 'active', 'period', 'dspPartner', 'sspPartner', 'trafficType', 'country', 'platform', 'region', 'typeReport', 'exampleCsv', 'subject', 'discrepancy', 'dspChangeName', 'sspChangeName', 'messageText']
+    let values = [];
+
+    data = JSON.parse(data);
+
+    data.forEach((item) => {
+        let typeTime = parseInt(item.typeTime);
+        let day = parseInt(item.day);
+        let hour = parseInt(item.hour);
+        let header = item.header;
+        let mailFrom = item.mailFrom;
+        let mailTo = JSON.parse(item.mailTo).join(',');
+        let flag = JSON.parse(item.flag).join(',');
+        let dsp = JSON.parse(item.dsp).join(',');
+        let ssp = JSON.parse(item.ssp).join(',');
+        let group = JSON.parse(item.group).join(',');
+        let order = '';
+        let comment = item.comment;
+        let active = parseInt(item.active);
+        let period = parseInt(item.period);
+        let dspPartner = '';
+        let sspPartner = '';
+        let trafficType = '';
+        let country = '';
+        let platform = '';
+        let region = '';
+        let typeReport = parseInt(item.typeReport);
+        let exampleCsv = parseInt(item.exampleCsv);
+        let subject = item.subject;
+        let discrepancy = parseInt(item.discrepancy);
+        let dspChangeName = '';
+        let sspChangeName = '';
+        let messageText = item.messageText;
+
+        if (item.dspChangeName !== '{}') {
+            dspChangeName = Object.entries(JSON.parse(item.dspChangeName))
+                .reduce((acc, cur) => {
+                    const [id, text] = cur;
+                    if (id && cur) {
+                        acc.push(`${id}:${text}`);
+                    }
+                    return acc;
+                }, [])
+                .join(',');
+        }
+        // console.log('dspChangeName:', dspChangeName);
+        if (item.sspChangeName !== '{}') {
+            sspChangeName = JSON.parse(item.sspChangeName)
+                .reduce((acc, cur) => {
+                    if (cur.id && cur.text) {
+                        acc.push(`${cur.id}:${cur.text}`);
+                    }
+                    return acc;
+                }, [])
+                .join(',');
+        }
+        //    ['typeTime', 'day', 'hour', 'header', 'mailFrom', 'mailTo', 'flag',               'dsp', 'ssp', 'group',             'order', 'comment', 'active', 'period',      'dspPartner', 'sspPartner',      'trafficType',     'country', 'platform',         'region', 'typeReport', 'exampleCsv', 'subject', 'discrepancy', 'dspChangeName', 'sspChangeName', 'messageText']
+        values.push(
+            `(${typeTime}, ${day}, ${hour}, '${header}', '${mailFrom}', '${mailTo}', '${flag}', '${dsp}', '${ssp}', '${group}', '${order}', '${comment}', ${active}, ${period}, '${dspPartner}', '${sspPartner}', '${trafficType}', '${country}', '${platform}', '${region}', ${typeReport}, ${exampleCsv}, '${subject}', ${discrepancy}, '${dspChangeName}', '${sspChangeName}', '${messageText}')`
+        );
+    });
+
+    // csv.split('\n').forEach((line, i) => {
+    //     if (i === 0) {
+    //         line.split(',').forEach((col, i) => {
+    //             // columns.push(`\`${col}\``);
+    //             // columns.push(`'${col}'`);
+    //             // columns.push(`${col}`);
+    //         });
+    //     } else {
+    //     }
+    //     // console.log(line);
+    // });
+
+    // console.log(columns.join(', '));
+    console.log(values.join(', '));
+    // console.log(JSON.parse(data));
+}
+
+async function countDynamicServers() {
+    const dataPath = path.join(__dirname, 'files', 'serversstatus.json');
+    let data = await fs.readFile(dataPath, 'utf8');
+    data = JSON.parse(data);
+
+    console.log('Data:', Object.keys(data).length);
 }
 
 module.exports = {
     test,
     monitorSeed,
     clearLiveServers,
+    testSendMails,
+    countDynamicServers,
 };
