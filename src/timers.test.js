@@ -161,8 +161,42 @@ function test10() {
         setImmediate(() => {
             const diff = process.hrtime(last);
             console.log(`setImmediate callback executed after ${diff[0]}s ${diff[1] / 1e6}ms`);
-        })
+        });
     }, 500);
+}
+
+// Test already processed timeout cancel
+function test11() {
+    const timeouts = [];
+    for (let i = 0; i < 10; i++) {
+        const timeout = setTimeout(() => {
+            console.log('Timeout:', i);
+        }, 1000 * i);
+        timeouts.push(timeout);
+    }
+
+    setTimeout(() => {
+        timeouts.forEach((timeout, i) => {
+            clearTimeout(timeout);
+            console.log('Timeout cleared:', i);
+        });
+    }, 1000 * 5);
+}
+
+// Test delayed timeout cancel
+function test12() {
+    const timeout = setTimeout(() => {
+        console.log('Timeout :', timeout);
+    }, 1000);
+
+    setTimeout(() => {
+        clearTimeout(timeout);
+        console.log('Timeout cleared');
+    }, 1000 * 3);
+    setTimeout(() => {
+        clearTimeout(timeout);
+        console.log('The Timeout cleared again');
+    }, 1000 * 5);
 }
 
 module.exports = {
@@ -176,4 +210,6 @@ module.exports = {
     test8,
     test9,
     test10,
+    test11,
+    test12,
 };

@@ -180,6 +180,19 @@ function test6() {
     res.then(console.log);
 }
 
+// Test try/catch/finally
+function test7() {
+    try {
+        console.log('Try block');
+        throw new Error('Error in try block');
+    } catch (error) {
+        console.error('Catch block:', error.message);
+        return error;
+    } finally {
+        console.log('Finally block');
+    }
+}
+
 module.exports = {
     promiseArray,
     promiseArray2,
@@ -191,4 +204,5 @@ module.exports = {
     test4,
     test5,
     test6,
+    test7,
 };
