@@ -18,6 +18,7 @@ function stopDocker(name) {
 }
 
 async function testGit() {
+    // Changes from Github
     const result = await exec('git status');
     console.log('Current command:', result);
 }
