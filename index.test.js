@@ -11,6 +11,7 @@ const basic = require('./src/basic.test');
 const date = require('./src/date.test');
 const mysqlTest = require('./src/mysql.test');
 const giveawayTest = require('./src/giveaway.test');
+const childProcessTest = require('./src/child_process.test');
 
 (async () => {
     try {
@@ -26,11 +27,12 @@ const giveawayTest = require('./src/giveaway.test');
         // timersTest.test9();
         // httpTest.test_1();
         // functions.test_2();
-        await promiseTests.test7();
+        // await promiseTests.test7();
         // basic.test1();
         // date.test();
         // mysqlTest.test1();
         // await giveawayTest.giveaway();
+        await childProcessTest.testGit();
     } catch (error) {
         console.error('Global Error: ', error);
     } finally {
