@@ -25,7 +25,7 @@ const childProcessTest = require('./src/child_process.test');
         // await seven.clearLiveServers();
         // await seven.countDynamicServers();
         // timersTest.test9();
-        // httpTest.test_1();
+        httpTest.test_1();
         // functions.test_2();
         // await promiseTests.test7();
         // basic.test1();
