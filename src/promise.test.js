@@ -193,6 +193,22 @@ function test7() {
     }
 }
 
+// Test async forEach
+function test8() {
+    const arr = [1, 2, 3];
+
+    arr.forEach(async (item, index) => {
+        await new Promise((resolve) =>
+            setTimeout(() => {
+                console.log('Item:', item);
+                resolve();
+            }, 1000 * index)
+        );
+    });
+
+    console.log('End of forEach');
+}
+
 module.exports = {
     promiseArray,
     promiseArray2,
@@ -205,4 +221,5 @@ module.exports = {
     test5,
     test6,
     test7,
+    test8,
 };

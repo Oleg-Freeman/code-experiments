@@ -93,7 +93,9 @@ async function clearLiveServers() {
     date.setMonth(date.getMonth() - 1);
     // console.log(date.getTime());
     // const sql = `DELETE FROM live_servers WHERE unixtime < ${Math.round(date.getTime() / 1000)};`;
-    const sql = `SELECT * FROM live_servers WHERE unixtime < ${Math.round(date.getTime() / 1000)};`;
+    // const sql = `DELETE FROM live_servers;`;
+    // const sql = `SELECT * FROM live_servers WHERE unixtime < ${Math.round(date.getTime() / 1000)};`;
+    const sql = `SELECT count(*) FROM live_servers;`;
     const rows = await query(sql);
     console.log(rows);
 }
@@ -189,10 +191,52 @@ async function countDynamicServers() {
     console.log('Data:', Object.keys(data).length);
 }
 
+async function admListSeed() {
+    const dataPath = path.join(__dirname, 'files', 'crids_example_1000.csv');
+    const data = await fs.readFile(dataPath, 'utf8');
+    const dataArray = data.split('\n');
+    const crids = [];
+
+    dataArray.forEach((line) => {
+        const [crid] = line.split(',');
+        crids.push(crid.trim());
+    });
+
+    // console.log(dataArray);
+
+    const findSql = `SELECT COUNT(*) as count FROM adm_list WHERE crid IN (?);`;
+    const existingCrids = await query(findSql, [crids]);
+
+    console.log('Count', existingCrids[0]['count']);
+    console.log(existingCrids);
+
+    if (existingCrids.length === existingCrids[0]['count']) {
+        return;
+    }
+
+    const insertData = dataArray
+        .map((line, index) => {
+            const [crid, partner_id] = line.split(',');
+
+            if (!crid || !partner_id) {
+                console.error(`Invalid line at index ${index}: ${line}`);
+                console.log('Crid:', crid, 'Partner ID:', partner_id);
+                return null; // Skip invalid lines
+            }
+
+            return `("TEST_${index}", "${crid.trim()}", ${partner_id.trim()}, 0, 1)`;
+        })
+        .filter((insert) => insert !== null); // Filter out null values
+    const createSql = `INSERT INTO adm_list (adid, crid, partner_id, tmt_blocked, active) VALUES ${insertData.join(', ')};`;
+
+    await query(createSql);
+}
+
 module.exports = {
     test,
     monitorSeed,
     clearLiveServers,
     testSendMails,
     countDynamicServers,
+    admListSeed,
 };

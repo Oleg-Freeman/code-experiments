@@ -12,6 +12,10 @@ const date = require('./src/date.test');
 const mysqlTest = require('./src/mysql.test');
 const giveawayTest = require('./src/giveaway.test');
 const childProcessTest = require('./src/child_process.test');
+const arrayTest = require('./src/array.test');
+const momentTest = require('./src/moment.test');
+const nodeUtilTest = require('./src/util.test');
+const fsTest = require('./src/fs.test');
 
 (async () => {
     try {
@@ -22,17 +26,23 @@ const childProcessTest = require('./src/child_process.test');
         // await loops.test5();
         // urls.test();
         // await seven.monitorSeed();
+        // await seven.admListSeed();
         // await seven.clearLiveServers();
         // await seven.countDynamicServers();
         // timersTest.test9();
-        httpTest.test_1();
+        // httpTest.test_1();
         // functions.test_2();
-        // await promiseTests.test7();
+        // await promiseTests.test8();
         // basic.test1();
         // date.test();
         // mysqlTest.test1();
         // await giveawayTest.giveaway();
-        await childProcessTest.testGit();
+        // await childProcessTest.testGit();
+        // arrayTest.test1();
+        // momentTest.test3();
+        nodeUtilTest.test1();
+        // await fsTest.testGlob();
+        // await fsTest.testReadDir();
     } catch (error) {
         console.error('Global Error: ', error);
     } finally {
