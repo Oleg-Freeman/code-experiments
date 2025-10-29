@@ -1,4 +1,5 @@
 const util = require('util');
+const { randomByRange } = require('../../utils');
 const config = require('../../config');
 const mysql = require('mysql');
 const fs = require('fs/promises');
@@ -232,6 +233,108 @@ async function admListSeed() {
     await query(createSql);
 }
 
+async function bundlesStatsSeed() {
+    const insertData = [];
+
+    // 5 bundles
+    for (let i = 0; i < 5; i++) {
+        // 10 days
+        for (let j = 1; j < 10; j++) {
+            const req = randomByRange(10, 1000);
+            const bid = randomByRange(10, 1000);
+            const win = randomByRange(10, 1000);
+            const imp = randomByRange(10, 1000);
+            const s_spd = randomByRange(10, 1000);
+            const d_spd = randomByRange(10, 1000);
+
+            insertData.push(
+                `("2025-10-${j > 9 ? j : '0' + j}", ${i}, "TEST_${i}", "banner", ${req}, ${bid}, ${win}, ${imp}, ${s_spd}, ${d_spd})`
+            );
+        }
+    }
+
+    const sql = `INSERT INTO dsp_bundles_statistic (date, dsp, bundle, type, req, bid, win, imp, s_spd, d_spd) VALUES ${insertData.join(', ')};`;
+
+    // console.log(sql);
+    // console.log('Insert rows:', insertData);
+
+    await query(sql);
+
+    console.log('Done');
+}
+
+async function clearBundlesStats() {
+    const sql = `DELETE FROM dsp_bundles_statistic WHERE date >= '2025-09-01' AND date <= '2025-11-01';`;
+
+    const rows = await query(sql);
+    console.log(rows);
+}
+
+async function addAverageRequests() {
+    const dataPath = path.join(__dirname, 'files', 'new_bundles_TripleLift_13907_28_10.csv');
+    const data = await fs.readFile(dataPath, 'utf8');
+    const dataArray = data.split('\n');
+    const bundles = [];
+
+    dataArray.forEach((line) => {
+        // console.log('Line:', line);
+        const [bundle] = line.split(',');
+
+        if (bundle === 'bundle_id') return;
+
+        bundles.push(bundle.trim());
+    });
+
+    // console.log(bundles);
+
+    const bundlesSet = new Set(bundles);
+    const bundlesString = [...bundlesSet].map((b) => `"${b}"`).join(', ');
+    const sql = `SELECT 
+            bundle,
+            AVG(req) AS avg_requests
+        FROM ssp_bundles_statistic
+        WHERE bundle IN (${bundlesString})
+        GROUP BY bundle`;
+
+    const requests = await query(sql);
+
+    const requestsObj = requests.reduce((acc, { bundle, avg_requests }) => {
+        acc[bundle] = avg_requests;
+
+        return acc;
+    }, {});
+
+    // console.log(result);
+    // console.log(requestsObj);
+
+    // console.log(sql);
+
+    const resultArray = [];
+
+    dataArray.forEach((line) => {
+        const [bundle, name, url, ads, genre] = line.split(',');
+
+        if (bundle === 'bundle_id') {
+            resultArray.push(line);
+            return;
+        }
+
+        let avgReq = 0;
+
+        if (requestsObj.hasOwnProperty(bundle.trim())) {
+            avgReq = (requestsObj[bundle.trim()] || 0).toFixed(2);
+        }
+
+        resultArray.push([bundle, name, url, ads, genre, avgReq].join(','));
+    });
+
+    const resultPath = path.join(__dirname, 'files', 'bundles_TripleLift_13907_28_10 (2).csv');
+
+    await fs.writeFile(resultPath, resultArray.join('\n'), 'utf8');
+
+    console.log('Done');
+}
+
 module.exports = {
     test,
     monitorSeed,
@@ -239,4 +342,7 @@ module.exports = {
     testSendMails,
     countDynamicServers,
     admListSeed,
+    bundlesStatsSeed,
+    clearBundlesStats,
+    addAverageRequests,
 };

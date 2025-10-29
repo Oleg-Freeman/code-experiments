@@ -1,33 +1,45 @@
-const mysql = require('mysql2');
+const mysql = require('mysql');
 const config = require('../config');
+const { sleep } = require('../utils');
 
 let connection = null;
 
 function connect() {
-    connection = mysql.createConnection({
+    connection = mysql.createPool({
+        connectionLimit: 15,
+        host: config.db.host,
+        port: config.db.port,
         user: config.db.user,
         password: config.db.password,
         database: config.db.database,
-        host: 'localhost',
-        port: 3306,
-        namedPlaceholders: true,
+    });
+
+    connection.on('enqueue', () => {
+        console.error('MySQL: Waiting for available connection slot');
     });
 }
 
-function test1() {
+async function testPromisifyMysql() {
     connect();
 
-    connection.query('SELECT * FROM partners WHERE id = :id', { id: 4 }, (error, results) => {
-        if (error) {
-            console.error(error);
-        } else {
-            console.log(results);
-        }
+    const result = await new Promise((resolve, reject) => {
+        connection.query('SELECT 1 + 1 AS solution', (error, results, fields) => {
+            if (error) {
+                reject(error);
+                return;
+            }
 
-        connection.end();
+            console.log('Callback result', results);
+
+            resolve(results);
+        });
     });
+
+    await sleep(1000);
+
+    console.log('Promisified result', result);
 }
 
 module.exports = {
-    test1,
+    testPromisifyMysql,
 };

@@ -209,6 +209,49 @@ function test8() {
     console.log('End of forEach');
 }
 
+// Test promisify callback function
+async function testPromisify() {
+    function myCallbackFunction(param1, param2, callback) {
+        setTimeout(() => {
+            if (param1 && param2) {
+                callback(null, `Success: ${param1}, ${param2}`);
+            } else {
+                callback('Error: Missing parameters');
+            }
+        }, 1000);
+    }
+
+    const myCallback = (err, result) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+
+        console.log(result);
+    };
+
+    // console.log('Test INVALID parameters:');
+    myCallbackFunction(null, null, myCallback);
+
+    // console.log('\nTest VALID parameters:');
+    myCallbackFunction(1, 2, myCallback);
+
+    // Promisify the function
+    const result = await new Promise((resolve, reject) => {
+        myCallbackFunction(3, 4, (err, res) => {
+            if (err) {
+                reject(err);
+                return;
+            }
+
+            resolve(res);
+        });
+    });
+    await sleep(1000);
+
+    console.log('Promisified result:', result);
+}
+
 module.exports = {
     promiseArray,
     promiseArray2,
@@ -222,4 +265,5 @@ module.exports = {
     test6,
     test7,
     test8,
+    testPromisify,
 };
