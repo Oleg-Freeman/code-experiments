@@ -23,7 +23,15 @@ async function testGit() {
     console.log('Current command:', result);
 }
 
+// Test shell command execution using child_process
+async function testShellCommand() {
+    const result = await exec('cd /media/oleg/Storage/coding/node-js/test/test ; git status');
+
+    console.log('result:', result);
+}
+
 module.exports = {
     stopDocker,
     testGit,
+    testShellCommand,
 };
