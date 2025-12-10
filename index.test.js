@@ -18,7 +18,7 @@ const momentTest = require('./src/moment.test');
 const nodeUtilTest = require('./src/util.test');
 const fsTest = require('./src/fs.test');
 const myUtil = require('./utils');
-// TEST changes here
+// TEST changes here to create conflict
 
 (async () => {
     try {
