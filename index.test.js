@@ -18,6 +18,7 @@ const momentTest = require('./src/moment.test');
 const nodeUtilTest = require('./src/util.test');
 const fsTest = require('./src/fs.test');
 const myUtil = require('./utils');
+const telegramTest = require('./src/telegram.test');
 // TEST update 6
 
 (async () => {
@@ -46,12 +47,15 @@ const myUtil = require('./utils');
         // mysql2Test.test1();
         // await giveawayTest.giveaway();
         // await childProcessTest.testGit();
-        await childProcessTest.testShellCommand();
+        // await childProcessTest.testShellCommand();
         // arrayTest.test1();
         // momentTest.test3();
         // nodeUtilTest.test1();
         // await fsTest.testGlob();
         // await fsTest.testReadDir();
+        // await telegramTest.testSendMessage();
+        // await telegramTest.testSendDocument();
+        await telegramTest.testSendLongMessage();
     } catch (error) {
         console.error('Global Error: ', error);
     } finally {

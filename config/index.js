@@ -15,4 +15,8 @@ module.exports = {
         database: process.env.DB_NAME,
         databaseStats: process.env.DB_NAME_STATS,
     },
+    telegram: {
+        apiKey: process.env.TELEGRAM_API_KEY,
+        chatId: process.env.TELEGRAM_CHAT_ID,
+    },
 };
