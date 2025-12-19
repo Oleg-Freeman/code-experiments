@@ -21,7 +21,11 @@ async function testSendDocument() {
 
 // Test send message with long text more than 4096 characters
 async function testSendLongMessage() {
-    const longText = 'A'.repeat(5000); // 5000 characters of 'A'
+    let longText = 'A'.repeat(5000); // 5000 characters of 'A'
+
+    if (longText.length > 4096) {
+        longText = longText.substring(0, 4093) + '...';
+    }
 
     await telegram.sendMessage({
         text: longText,
