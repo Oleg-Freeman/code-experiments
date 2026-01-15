@@ -8,7 +8,7 @@ const seven = require('./src/seven/seven.test');
 const httpTest = require('./src/http.test');
 const functions = require('./src/functions.test');
 const basic = require('./src/basic.test');
-const date = require('./src/date.test');
+const dateTest = require('./src/date.test');
 const mysqlTest = require('./src/mysql.test');
 const mysql2Test = require('./src/mysql2.test');
 const giveawayTest = require('./src/giveaway.test');
@@ -41,8 +41,7 @@ const telegramTest = require('./src/telegram.test');
         // httpTest.test_1();
         // functions.test_2();
         // basic.test1();
-        // date.test();
-        // date.test2();
+        dateTest.test6();
         // await mysqlTest.testPromisifyMysql();
         // mysql2Test.test1();
         // await giveawayTest.giveaway();
@@ -55,7 +54,7 @@ const telegramTest = require('./src/telegram.test');
         // await fsTest.testReadDir();
         // await telegramTest.testSendMessage();
         // await telegramTest.testSendDocument();
-        await telegramTest.testSendLongMessage();
+        // await telegramTest.testSendLongMessage();
     } catch (error) {
         console.error('Global Error: ', error);
     } finally {
