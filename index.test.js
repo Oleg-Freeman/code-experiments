@@ -19,6 +19,7 @@ const nodeUtilTest = require('./src/util.test');
 const fsTest = require('./src/fs.test');
 const myUtil = require('./utils');
 const telegramTest = require('./src/telegram.test');
+const stringTest = require('./src/string.test');
 // TEST update 7
 
 (async () => {
@@ -41,13 +42,13 @@ const telegramTest = require('./src/telegram.test');
         // httpTest.test_1();
         // functions.test_2();
         // basic.test1();
-        dateTest.test6();
+        // dateTest.test6();
         // await mysqlTest.testPromisifyMysql();
         // mysql2Test.test1();
         // await giveawayTest.giveaway();
         // await childProcessTest.testGit();
         // await childProcessTest.testShellCommand();
-        // arrayTest.test1();
+        arrayTest.test2();
         // momentTest.test3();
         // nodeUtilTest.test1();
         // await fsTest.testGlob();
@@ -55,6 +56,7 @@ const telegramTest = require('./src/telegram.test');
         // await telegramTest.testSendMessage();
         // await telegramTest.testSendDocument();
         // await telegramTest.testSendLongMessage();
+        // stringTest.divideString();
     } catch (error) {
         console.error('Global Error: ', error);
     } finally {

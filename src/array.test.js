@@ -25,6 +25,23 @@ function test1() {
     }
 }
 
+// Iterate over a Set
+function test2() {
+    const mySet = new Set([3, 4, 5, 6, 7]);
+
+    // Iterate over Set using for..of
+    for (const value of mySet) {
+        console.log(value);
+    }
+
+    // Iterate over Set using forEach
+    mySet.forEach((value, i) => {
+        // No index in Set, i is same as value
+        console.log(i, value);
+    });
+}
+
 module.exports = {
     test1,
+    test2,
 };
