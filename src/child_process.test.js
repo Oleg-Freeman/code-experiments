@@ -35,12 +35,32 @@ async function testMultipleChildProcesses() {
     return new Promise((resolve, reject) => {
         // Create first child process
         const child1 = childProcess.spawn('echo', ['Hello from child process 1']);
-        // Create second child process  
+        // Create second child process
         const child2 = childProcess.spawn('echo', ['Hello from child process 2']);
 
         let output1 = '';
         let output2 = '';
         let processesCompleted = 0;
+        let promiseSettled = false;
+
+        // Helper function to check if both processes completed
+        const checkCompletion = () => {
+            if (processesCompleted === 2 && !promiseSettled) {
+                promiseSettled = true;
+                // Both processes completed, combine and print output
+                const combinedOutput = `Combined output:\n${output1}${output2}`;
+                console.log(combinedOutput);
+                resolve(combinedOutput);
+            }
+        };
+
+        // Helper function to handle errors
+        const handleError = (error) => {
+            if (!promiseSettled) {
+                promiseSettled = true;
+                reject(error);
+            }
+        };
 
         // Collect output from first child
         child1.stdout.on('data', (data) => {
@@ -56,29 +76,19 @@ async function testMultipleChildProcesses() {
         child1.on('close', (code) => {
             console.log(`Child process 1 exited with code ${code}`);
             processesCompleted++;
-            if (processesCompleted === 2) {
-                // Both processes completed, combine and print output
-                const combinedOutput = `Combined output:\n${output1}${output2}`;
-                console.log(combinedOutput);
-                resolve(combinedOutput);
-            }
+            checkCompletion();
         });
 
         // Handle completion of second child
         child2.on('close', (code) => {
             console.log(`Child process 2 exited with code ${code}`);
             processesCompleted++;
-            if (processesCompleted === 2) {
-                // Both processes completed, combine and print output
-                const combinedOutput = `Combined output:\n${output1}${output2}`;
-                console.log(combinedOutput);
-                resolve(combinedOutput);
-            }
+            checkCompletion();
         });
 
         // Handle errors
-        child1.on('error', reject);
-        child2.on('error', reject);
+        child1.on('error', handleError);
+        child2.on('error', handleError);
     });
 }
 
