@@ -335,6 +335,31 @@ async function addAverageRequests() {
     console.log('Done');
 }
 
+async function bidMachineApiTest() {
+    const userName = process.env.BIDMACHINE_USERNAME;
+    const password = process.env.BIDMACHINE_PASSWORD;
+    const start = '2026-01-27';
+    const end = '2026-01-30';
+    const fields = 'date,publisher_id,source_id,agency_id,impressions,spend';
+    const url = `https://api-eu.bidmachine.io/api/v1/report/bidder?start=${start}&end=${end}&fields=${fields}`;
+    const authToken = Buffer.from(`${userName}:${password}`).toString('base64');
+
+    console.log('User:', userName);
+    console.log('Password:', password);
+
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/x-ndjson',
+            Authorization: `Basic ${authToken}`,
+        },
+    });
+
+    const data = await response.text();
+    console.log(data);
+    await fs.writeFile('./bidmachine_api_report.csv', data, 'utf8');
+}
+
 module.exports = {
     test,
     monitorSeed,
@@ -345,4 +370,5 @@ module.exports = {
     bundlesStatsSeed,
     clearBundlesStats,
     addAverageRequests,
+    bidMachineApiTest,
 };
