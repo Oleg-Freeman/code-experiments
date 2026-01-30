@@ -75,6 +75,10 @@ async function testMultipleChildProcesses() {
         // Handle completion of first child
         child1.on('close', (code) => {
             console.log(`Child process 1 exited with code ${code}`);
+            if (code !== 0) {
+                handleError(new Error(`Child process 1 exited with code ${code}`));
+                return;
+            }
             processesCompleted++;
             checkCompletion();
         });
@@ -82,6 +86,10 @@ async function testMultipleChildProcesses() {
         // Handle completion of second child
         child2.on('close', (code) => {
             console.log(`Child process 2 exited with code ${code}`);
+            if (code !== 0) {
+                handleError(new Error(`Child process 2 exited with code ${code}`));
+                return;
+            }
             processesCompleted++;
             checkCompletion();
         });
