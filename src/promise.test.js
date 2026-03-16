@@ -93,6 +93,9 @@ async function test2() {
 
     result.forEach((item) => {
         console.log('Status:', item.status);
+        console.log('Value:', item.value);
+        console.log('Reason:', item.reason);
+        console.log('-----------------');
         if (item.status === 'fulfilled') {
             console.log('Fulfilled:', item.value);
         } else {

@@ -338,8 +338,8 @@ async function addAverageRequests() {
 async function bidMachineApiTest() {
     const userName = process.env.BIDMACHINE_USERNAME;
     const password = process.env.BIDMACHINE_PASSWORD;
-    const start = '2026-01-27';
-    const end = '2026-01-30';
+    const start = '2026-01-26';
+    const end = '2026-02-02';
     const fields = 'date,publisher_id,source_id,agency_id,impressions,spend';
     const url = `https://api-eu.bidmachine.io/api/v1/report/bidder?start=${start}&end=${end}&fields=${fields}`;
     const authToken = Buffer.from(`${userName}:${password}`).toString('base64');

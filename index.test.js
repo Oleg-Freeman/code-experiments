@@ -25,8 +25,7 @@ const stringTest = require('./src/string.test');
 (async () => {
     try {
         // bitwiseOperations();
-        // await promiseTests.timeout();
-        // await promiseTests.testPromisify();
+        // await promiseTests.test2();
         // ssh.test2();
         // await timersTest.test4();
         // await loops.test5();
@@ -48,8 +47,8 @@ const stringTest = require('./src/string.test');
         // await giveawayTest.giveaway();
         // await childProcessTest.testGit();
         // await childProcessTest.testShellCommand();
-        await childProcessTest.testMultipleChildProcesses();
-        // arrayTest.test2();
+        // await childProcessTest.testMultipleChildProcesses();
+        arrayTest.test3();
         // momentTest.test3();
         // nodeUtilTest.test1();
         // await fsTest.testGlob();

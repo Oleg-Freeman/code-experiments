@@ -41,7 +41,15 @@ function test2() {
     });
 }
 
+// Test destructuring undefined
+function test3() {
+    const arr = [1, 2, 3];
+    const [a, b, c, d, e] = arr;
+    console.log(a, b, c, d, e);
+}
+
 module.exports = {
     test1,
     test2,
+    test3,
 };
