@@ -20,7 +20,7 @@ const fsTest = require('./src/fs.test');
 const myUtil = require('./utils');
 const telegramTest = require('./src/telegram.test');
 const stringTest = require('./src/string.test');
-// TEST update 12
+// TEST update 13
 
 (async () => {
     try {
